@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: white;            
+        }
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-content: center;
+            
+        }
+        .card{
+            width: 30%;
+            height: 30vh;
+            border: 5px solid gainsboro;
+            margin: 15px;
+            border-radius: 1rem;
+            box-shadow: 10px 10px 8px #888888;
+        }
+        .blue{
+            background-color:rgb(75, 58, 255);
+        }
+        .yellow{
+            background-color:rgb(255, 219, 58);
+        }
+        .red{
+            background-color:rgb(255, 58, 58);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="button" value="Iniciar" id="btnIniciar">
+        <input type="number" name="numeros" id="numeros" placeholder="Números en el arreglo">
+    </div>
+    <div class="container">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+
+    <script>
+
+        let arreglo = []
+        const btnIniciar = document.querySelector('#btnIniciar')
+        const divs = document.getElementsByClassName('card')        
+
+        const colorear = (i,color) => divs[i].classList.add(color)        
+        const resetColor = (i) => divs[i].classList.remove("blue", "yellow", "red")
+
+        const llenarArreglo = () => {
+            arreglo = []
+            const numeros = document.getElementById('numeros').value
+            for (let i = 0; i < numeros; i++) {
+                let num = Math.floor(Math.random() * 9)
+                if(i > 0){
+                    if(num == arreglo[i-1]){
+                        num = Math.floor(Math.random() * 9)
+                    }
+                }
+                arreglo.push(num)
+            }
+            console.log(arreglo, numeros)
+            iniciar()
+        }
+
+        const iniciar = () => {            
+            arreglo.forEach((item, key) => {
+                setTimeout(() => colorear(item,"blue"), 1000 * (key+1))
+                if(key > 0){
+                    setTimeout(() => resetColor(arreglo[key-1]), 1000 * (key+1))
+                }
+            })
+            setTimeout(() => resetColor(arreglo[arreglo.length-1]), 1000 * (arreglo.length+1))            
+        }
+
+        btnIniciar.addEventListener('click', llenarArreglo)
+
+    </script>
+</body>
+</html>
